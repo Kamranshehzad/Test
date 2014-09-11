@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace test2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now.AddDays(4);
+            var list = new List<KeyValuePair<string, decimal>>();
+            ParseDate(startDate, endDate, ref list);
+            foreach (KeyValuePair<string, decimal> x in list)
+            {
+                Console.WriteLine("{0},{1}", x.Key, x.Value);
+            }
+            Console.ReadLine();
+        }
+
+        private static void ParseDate(DateTime startDate, DateTime endDate, ref List<KeyValuePair<string, decimal>> list)
+        {
+            TimeSpan timeSpan = endDate - startDate;
+            if (startDate.Hour > 0)
+                list.Add(new KeyValuePair<string, decimal>(startDate.ToShortDateString() + " Hours remaining", 24 - startDate.Hour));
+
+            if (timeSpan.Days >= 1)
+                for (int i = 0; i <= timeSpan.Days; i++)
+                    list.Add(new KeyValuePair<string, decimal>(endDate.AddDays(i).ToShortDateString() + " Hours remaining", 24));
+
+            if (endDate.Hour > 0)
+                list.Add(new KeyValuePair<string, decimal>(endDate.ToShortDateString() + " Hours remaining", endDate.Hour));
+        }
+    }
+}
+
+ 
